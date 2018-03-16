@@ -62,6 +62,14 @@ print('\n ice_cosmo5')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-12,xmax=1.0e-5)
 getVelocitySize(ag=0.835,bg=0.39,av=27.7,bv=0.21579)
 
+print('\n ice_cosmo5xmin-14')
+transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
+getVelocitySize(ag=0.835,bg=0.39,av=27.7,bv=0.21579)
+
+print('\n ice_hex')
+transformPSD(a=0.22,b=1.0/3.31,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
+getVelocitySize(ag=0.22,bg=1.0/3.31,av=41.9,bv=0.26)
+
 #rho = lambda D: (6.0*1.588/np.pi)*D**(2.56-3)
 #rho440 = lambda x: 440.0 + 0.0*x
 #F94 = lambda x: 84.0 + 0.0*x
