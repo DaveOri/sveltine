@@ -12,12 +12,24 @@
 using namespace boost::random;
 //using namespace std; //già incluso in cristalli.h
 
-int main()
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
+
+#include "argument_parser.h"
+po::options_description description("Allowed options");
+po::variables_map vm;
+
+int main(int argn, char** argv)
 {
+    cout<<"Hello worlds!"<<endl;
+	argument_parser parser(argn, argv);
+
+    exit(0);
+	
 	srand(time(NULL));
 	double d=20;
 	//crystal aggregato=crystal::load_round("./mixCol3044.38.dat");  // !!!
-	crystal aggregato=crystal::load_R("./RmixCol5137.27.dat"); 
+	crystal aggregato=crystal::load_R("./RmixCol5137.27.dat##"); 
 	aggregato.Dmax=5137.27;					// !!!
 //	aggregato.d=20;							// !!!
 	double f=10./100.;						// !!!
