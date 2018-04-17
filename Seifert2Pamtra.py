@@ -46,6 +46,10 @@ print('\n snow_SBB')
 transformPSD(a=5.13,b=0.5,nu=0.0,mu=0.5,xmin=1.0e-10,xmax=2.0e-5)
 getVelocitySize(ag=5.13,bg=0.5,av=8.294,bv=0.125)
 
+print('\n snow_SBB_nonsphere')
+transformPSD(a=5.13,b=0.5,nu=0.0,mu=1.0/3.0,xmin=1.0e-10,xmax=2.0e-5)
+getVelocitySize(ag=5.13,bg=0.5,av=np.nan,bv=np.nan)
+
 print('\n graupelhail_cosmo5')
 transformPSD(a=1.42e-1,b=0.314,nu=1.0,mu=1.0/3.0,xmin=1.0e-9,xmax=5.0e-4)
 getVelocitySize(ag=1.42e-1,bg=0.314,av=86.89371,bv=0.268325)
@@ -61,6 +65,10 @@ getVelocitySize(ag=1.24e-1,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
 print('\n ice_cosmo5')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-12,xmax=1.0e-5)
 getVelocitySize(ag=0.835,bg=0.39,av=27.7,bv=0.21579)
+
+print('\n ice_cosmo5_nonsphere')
+transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
+getVelocitySize(ag=0.835,bg=0.39,av=np.nan,bv=np.nan)
 
 print('\n ice_cosmo5xmin-14')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
