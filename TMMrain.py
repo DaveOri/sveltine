@@ -23,7 +23,7 @@ c = 299792458.
 wl_m = c/frequencies
 wl_mm = wl_m*1000.0
 
-sizes = np.arange(0.01,5.0,0.01)
+sizes = np.arange(0.01,8.5,0.01)
 #temperatures = np.array([273.15,283.15,293.15])
 temperatures = np.array([float(temperatures)])
 
@@ -46,6 +46,6 @@ for T in temperatures:
             rxs = radar.radar_xsect(rain)
             rain.set_geometry(tmatrix_aux.geom_vert_forw)
             ext = scatter.ext_xsect(rain)
-            print(rxs,ext)
+            print(d,rxs,ext,T,f)
             table.loc[d] = T,wl,K2,rxs,ext
         table.to_csv(str(T-273.15)[:2]+'C_'+str(f*1e-9)+'GHz.csv')
