@@ -17,25 +17,30 @@ namespace po = boost::program_options;
 
 #include "argument_parser.h"
 po::options_description description("Allowed options");
-po::variables_map vm;
+//po::variables_map vm;
 
 int main(int argn, char** argv)
 {
     cout<<"Hello worlds!"<<endl;
-	argument_parser parser(argn, argv);
-
-    exit(0);
-	
+	argument_parser parser(argn, argv);	
 	srand(time(NULL));
-	double d=20;
+	double d;
+	d=parser.vm["dipole"].as<double>();
+	cout<<"opening "<<parser.vm["input"].as<string>()<<endl;	
 	//crystal aggregato=crystal::load_round("./mixCol3044.38.dat");  // !!!
-	crystal aggregato=crystal::load_R("./RmixCol5137.27.dat##"); 
-	aggregato.Dmax=5137.27;					// !!!
+	//crystal aggregato=crystal::load_R("./RmixCol5137.27.dat##");
+	crystal aggregato=crystal::load_R(parser.vm["input"].as<string>());
+	cout<<"ho importato l'aggregato"<<endl;
+	aggregato.Dmax=parser.vm["dmax"].as<double>();
+	cout<<"ho settato dmax"<<endl;
+//	aggregato.Dmax=5137.27;					// !!!
 //	aggregato.d=20;							// !!!
-	double f=10./100.;						// !!!
+//	double f=10./100.;						// !!!
+	double f=parser.vm["melt"].as<double>();
+	cout<<"ho settato la water fraction"<<endl;
 	unsigned long int Nwater=round(aggregato.N*f);
 	cout<<"Nwater   "<<Nwater<<endl;
-	unsigned long int melted=0;
+	unsigned long int melted=0; // assume always initially dry particles
 	int I,J,K;
 // trovare i limiti estremi della particella e aggiungere o togliere 1 /// FATTO	
 	int Xmin=0,Xmax=0,Ymin=0,Ymax=0,Zmin=0,Zmax=0;
@@ -183,6 +188,7 @@ int main(int argn, char** argv)
 //		cout<<"IJK "<<I<<" "<<J<<" "<<K<<endl;
 //		cout<<"XYZ "<<I+Xmin-1<<" "<<J+Ymin-1<<" "<<K+Zmin-1<<endl;
 		melted++;
+		cout<<melted<<"/"<<Nwater<<endl;
 	}
 // riconvertire l'array tridimensionale in crystal
 	for(int i=0;i<aggregato.N;i++)
@@ -190,12 +196,13 @@ int main(int argn, char** argv)
 		aggregato.dipoles(i,3)=lattice[(int)aggregato.dipoles(i,0)-Xmin][(int)aggregato.dipoles(i,1)-Ymin][(int)aggregato.dipoles(i,2)-Zmin];
 	}
 // salvare la particella
-	string MR="MR";
-	string Col="Col";
-	ostringstream oss;
-	oss<<f*100.;
-	string fraction=oss.str();
-	MR.append(fraction);
-	MR.append(Col);
-	aggregato.saveDDSCAT6_1(MR);
+	cout<<"opening "<<parser.vm["output"].as<string>()<<endl;
+//	string MR="MR";
+//	string Col="Col";
+//	ostringstream oss;
+//	oss<<f*100.;
+//	string fraction=oss.str();
+//	MR.append(fraction);
+//	MR.append(Col);
+	aggregato.saveDDSCAT6_1(parser.vm["output"].as<string>());
 }

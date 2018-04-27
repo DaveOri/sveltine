@@ -14,6 +14,8 @@ argument_parser::argument_parser(int argn, char** argv){
 		("help", "produce help message")
 		("options", "list options")
 		("melt",po::value<double>(),"set wanted melting fraction")
+		("dipole",po::value<double>(),"set interdipole spacing")
+		("dmax",po::value<double>(),"set particle maximum dimension for header comment")
 		("input",po::value<string>(),"set input file name")
 		("output",po::value<string>(),"set output file name")
 	;
@@ -33,6 +35,20 @@ argument_parser::argument_parser(int argn, char** argv){
 		cout<<"requested melted fraction is "<<vm["melt"].as<double>()<<endl;
 	} else {
 		cout<<"no melting fraction requested"<<endl;
+		exit(0);
+	}
+	
+	if (vm.count("dipole")) {
+		cout<<"passed interdipole spacing is "<<vm["dipole"].as<double>()<<endl;
+	} else {
+		cout<<"no interdipole spacing passed"<<endl;
+		exit(0);
+	}
+
+	if (vm.count("dmax")) {
+		cout<<"passed maximum dimension is "<<vm["dmax"].as<double>()<<endl;
+	} else {
+		cout<<"no maximum dimension passed"<<endl;
 		exit(0);
 	}
 	
