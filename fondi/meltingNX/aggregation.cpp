@@ -23,6 +23,7 @@ int main(int argn, char** argv)
 {
     cout<<"Hello worlds!"<<endl;
 	argument_parser parser(argn, argv);
+	cout<<parser.vm["input"].as<string>()<<endl;
 
     exit(0);
 	
