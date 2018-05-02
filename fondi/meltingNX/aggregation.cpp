@@ -22,7 +22,9 @@ po::options_description description("Allowed options");
 int main(int argn, char** argv)
 {
     cout<<"Hello worlds!"<<endl;
-	argument_parser parser(argn, argv);	
+	argument_parser parser(argn, argv);
+	cout<<parser.vm["input"].as<string>()<<endl;
+
 	srand(time(NULL));
 	double d;
 	d=parser.vm["dipole"].as<double>();
@@ -40,7 +42,7 @@ int main(int argn, char** argv)
 	cout<<"ho settato la water fraction"<<endl;
 	unsigned long int Nwater=round(aggregato.N*f);
 	cout<<"Nwater   "<<Nwater<<endl;
-	unsigned long int melted=0; // assume always initially dry particles
+	unsigned long int melted=aggregato.Nm; // get number of melted dipoles from shapefile
 	int I,J,K;
 // trovare i limiti estremi della particella e aggiungere o togliere 1 /// FATTO	
 	int Xmin=0,Xmax=0,Ymin=0,Ymax=0,Zmin=0,Zmax=0;
@@ -94,7 +96,7 @@ int main(int argn, char** argv)
 	cout<<"Ho messo lattice a 0"<<endl;
 	for(int i=0;i<aggregato.N;i++)
 	{
-		lattice[(int)aggregato.dipoles(i,0)-Xmin][(int)aggregato.dipoles(i,1)-Ymin][(int)aggregato.dipoles(i,2)-Zmin]=aggregato.dipoles(i,3); //saranno tutte 1
+		lattice[(int)aggregato.dipoles(i,0)-Xmin][(int)aggregato.dipoles(i,1)-Ymin][(int)aggregato.dipoles(i,2)-Zmin]=aggregato.dipoles(i,3); // prendo il materiale dall'aggregato iniziale
 	}
 	cout<<"Ho messo l'aggregato nel matricione"<<endl;
 	mt19937_64 gen;

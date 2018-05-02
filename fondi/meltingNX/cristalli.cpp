@@ -67,10 +67,10 @@ void crystal::saveDDSCAT6_1(string LABEL)
 {
 	ostringstream oss;
 	oss<<Dmax;
-	string MaximumDimension = oss.str();
-	string extension(".dat");
-	LABEL.append(MaximumDimension);
-	LABEL.append(extension);
+	//string MaximumDimension = oss.str();
+	//string extension(".dat");
+	//LABEL.append(MaximumDimension);
+	//LABEL.append(extension);
 	ofstream OUT(LABEL.c_str());
 	double aeff=d*pow(0.25*3*N/M_PI,1./3.);//
 	OUT<<"Aggregate with Dmax= "<<Dmax<<" and aeff= "<<aeff<<endl;
@@ -140,7 +140,7 @@ crystal crystal::load_R(string previous)
 
 	ifstream IN;
 	const char *name;
-   name = previous.c_str();
+    name = previous.c_str();
 	IN.open(name, std::ifstream::in);
 	IN.seekg (0, ios::end);
 	int caratteri = IN.tellg();
@@ -164,13 +164,16 @@ crystal crystal::load_R(string previous)
 	temp.dipoles.resize(temp.N,4);
 	cout<<"Ho creato vettori   "<<temp.N<<endl;
 	IN.seekg (0, ios::beg);
-	cout<<"Mi sono rimesso all'inizio"<<endl;
+	temp.Nm = 0;
+	cout<<"Mi sono rimesso all'inizio. Il numero di default di dipoli fusi è "<<temp.Nm<<endl;
 	
 	righe=0;
 	int equals=0;
 	int useless;
+	int material;
 	char c;
 	double aeff;
+
 	while(righe<6)
 	{
 		c=IN.get();
@@ -191,10 +194,15 @@ crystal crystal::load_R(string previous)
 	cout<<"Mi sono posizionato all'inizio della settima riga"<<endl;
 	for(int i=0;i<temp.N;i++)
 	{
-		IN>>useless>>temp.dipoles(i,0)>>temp.dipoles(i,1)>>temp.dipoles(i,2)>>useless>>useless>>useless;
+		IN>>useless>>temp.dipoles(i,0)>>temp.dipoles(i,1)>>temp.dipoles(i,2)>>material>>useless>>useless;
 		temp.dipoles(i,3)=1;
+		if(material==2)
+		{
+     		temp.dipoles(i,3)=2;
+		    temp.Nm++;
+		}
 	}
-	std::cout<<"Ho riempito i vettori"<<std::endl;
+	std::cout<<"Ho riempito i vettori. Ho contato dipole fusi "<<temp.Nm<<std::endl;
 	temp.d=aeff*pow((4.*M_PI)/(temp.N*3.),1./3.);
 	cout<<"Ho calcolato d   "<<temp.d<<endl;
 	return temp;	

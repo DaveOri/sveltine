@@ -11,6 +11,7 @@ class crystal
 	Vector3d CM;	//center of mass coordinate vector
 
 	long int N;		//number of dipoles
+	long int Nm;    //number of melted dipoles
 
 	MatrixX4d dipoles;	//array of dipoles coordinates Nx4
 
