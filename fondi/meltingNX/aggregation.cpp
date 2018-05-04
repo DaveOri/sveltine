@@ -190,7 +190,7 @@ int main(int argn, char** argv)
 //		cout<<"IJK "<<I<<" "<<J<<" "<<K<<endl;
 //		cout<<"XYZ "<<I+Xmin-1<<" "<<J+Ymin-1<<" "<<K+Zmin-1<<endl;
 		melted++;
-		cout<<melted<<"/"<<Nwater<<endl;
+		//cout<<melted<<"/"<<Nwater<<endl;
 	}
 // riconvertire l'array tridimensionale in crystal
 	for(int i=0;i<aggregato.N;i++)
