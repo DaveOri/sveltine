@@ -169,7 +169,7 @@ crystal crystal::load_R(string previous)
 	
 	righe=0;
 	int equals=0;
-	int useless;
+	double useless;
 	int material;
 	char c;
 	double aeff;
@@ -201,6 +201,7 @@ crystal crystal::load_R(string previous)
      		temp.dipoles(i,3)=2;
 		    temp.Nm++;
 		}
+		//cout<<i<<" "<<temp.dipoles(i,0)<<endl;
 	}
 	std::cout<<"Ho riempito i vettori. Ho contato dipole fusi "<<temp.Nm<<std::endl;
 	temp.d=aeff*pow((4.*M_PI)/(temp.N*3.),1./3.);

@@ -27,7 +27,7 @@ for f in $files; do
   echo $dmax $dip $filename
 
   fin=$f
-  if [ $(ls *temp 2> /dev/null) ]; then
+  if [ $(ls ${curfld}/*temp 2> /dev/null) ]; then
     echo "another process is working here"
   else
     for m in $melts; do
