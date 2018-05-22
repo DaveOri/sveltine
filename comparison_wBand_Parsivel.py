@@ -1,5 +1,5 @@
-
-%matplotlib inline
+# -*- coding: utf-8 -*-
+#%matplotlib inline
 
 import matplotlib.pyplot as plt
 import itertools
@@ -286,6 +286,8 @@ for ii, val in enumerate(events.day):
     #variables
     #D = df.loc[:,diameter]
     radar_cross = df.loc[:,radarxs]
+    #radar_cross = df.loc[:,diameter]**6.0/int_const
+
     #ext_cross = df.loc[:,extxs]
 
     #radar_cross
@@ -323,6 +325,7 @@ for ii, val in enumerate(events.day):
 	#***************************
     #upscale Parsivel resolution to rain scatterint table resolution
     Z_pars = np.zeros(len(tPar))
+    ZD6_pars = np.zeros(len(tPar))
     delta = 0.01
     upscale_end = (len(df)+1.)/100.
     diameter_ups = np.arange(delta,upscale_end,delta)
@@ -343,9 +346,11 @@ for ii, val in enumerate(events.day):
 
         #calculate upscaled values from parsivel with new radar cross section
         y = PSD(diameter_ups)*df.loc[:,radarxs]
+        d6 = PSD(diameter_ups)*df.loc[:,diameter]**6
         #print(y)
 
-        Z_pars[t] = int_const * np.trapz(y, dx = delta)
+        ZD6_pars[t] = d6.sum()*delta#np.trapz(y, dx = delta)
+        Z_pars[t] = int_const * y.sum()*delta#np.trapz(y, dx = delta)
         #print(Z[t])
 
         #if t == 1: break
@@ -358,12 +363,14 @@ for ii, val in enumerate(events.day):
 
 	#***************************
     Ze_Pars_new_dbz = 10 * np.ma.log10(np.abs(Z_pars))
+    Ze_Pars_D6_dbz = 10 * np.ma.log10(np.abs(ZD6_pars))
     #Ze_Pars_new_dbz = 10 * np.log10(np.abs(Z_pars))
 
     print(Ze_Pars_new_dbz)
     Ze_Pars_new_dbz.shape
 
     parsDataFrame = pd.DataFrame(data=Ze_Pars_new_dbz,columns=['Ze'], index=timesPar)
+    D6parsDataFrame = pd.DataFrame(data=Ze_Pars_D6_dbz,columns=['Ze'], index=timesPar)
 
     #np.where(np.isnan(NPar[:,1]) ==False)
 
@@ -475,7 +482,8 @@ for ii, val in enumerate(events.day):
     dfArrayFlat_W_Band =  dfArrayFlat_W_Band[~np.isnan(dfArrayFlat_W_Band)]
 
     newParsDF = parsDataFrame[(parsDataFrame.Ze > -40)]
-    
+    D6ParsDF = D6parsDataFrame[(D6parsDataFrame.Ze > -40)]
+    #parsDataFrame_old=10.0*np.ma.log10(parsDataFrame_old)
     oldParsDF = parsDataFrame_old[(parsDataFrame_old.Ze > -9)]
     #print(newParsDF.Ze)
 
@@ -579,7 +587,19 @@ for ii, val in enumerate(events.day):
         out = plotId+'_'
         plt.savefig(out+'pdf_analysis_'+str(ii)+'.png', format='png', dpi=200,bbox_inches='tight')
         #print out+'pdf_analysis'+'.png'
-    
+    commonIndex = newParsDF.index.intersection(oldParsDF.index)
+    plt.figure()
+    plt.scatter(oldParsDF.loc[commonIndex],newParsDF.loc[commonIndex],label='TMM',s=2)
+    plt.scatter(oldParsDF.loc[commonIndex],D6ParsDF.loc[commonIndex],label='D6',s=1)
+    ax=plt.gca()
+    ax.set_xlim([-5,35])
+    ax.set_ylim([-5,35])
+    plt.plot(ax.get_xlim(),ax.get_ylim())
+    plt.legend()
+    plt.grid()
+    plt.xlabel('Parsivel reflectivity  [dBZ]')
+    plt.ylabel('Computed reflectivity  [dBZ]')
+    plt.savefig(out+'scatter_analysis_'+str(ii)+'.png', format='png', dpi=200,bbox_inches='tight')
     #if ii == 0: break
 
 plt.show()
