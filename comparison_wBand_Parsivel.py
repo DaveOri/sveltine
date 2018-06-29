@@ -336,11 +336,11 @@ for ii, val in enumerate(events.day):
         # actual class-number is class_num + 1
 
         #upscale parsivel resolution - devide NPar by class width in pars_class
-        N_ups = NPar[:,t]/pars_class[:,1]
+        N_ups = (10.0**NPar[:,t])#/pars_class[:,1]
 
         #convert all nan to zero
         N_ups = np.nan_to_num(N_ups)
-
+        #print(N_ups[:10])
         #PSD = BinnedPSD(bin_edges,NPar[:,t])
         PSD = BinnedPSD(bin_edges,N_ups)
 
@@ -489,6 +489,8 @@ for ii, val in enumerate(events.day):
 
     med_newpars = np.median(newParsDF.Ze)
     
+    med_D6pars = np.median(D6ParsDF.Ze)
+
     med_oldpars = np.median(oldParsDF.Ze)
 
     med_WBand = np.median(dfArrayFlat_W_Band)
@@ -517,11 +519,16 @@ for ii, val in enumerate(events.day):
     #alpha = transparency[0,1] 
     n, bins, patches = plt.hist(newParsDF.Ze, 50, 
                                normed=1, facecolor='r',
-                               alpha=0.6, label = 'Parsivel (new Ze)')
+                               alpha=0.6, label = 'TMM (new Ze)')
+                               
+    n, bins, patches = plt.hist(D6ParsDF.Ze, 50, 
+                               normed=1, facecolor='m',
+                               alpha=0.6, label = 'D6 Ze')
 
     n, bins, patches = plt.hist(oldParsDF.Ze, 50, 
                                normed=1, facecolor='salmon',
-                               alpha=0.6, label = 'Parsivel (old Ze)')
+                               alpha=0.6, label = 'Parsivel Ze')
+                               
         
     n, bins, patches = plt.hist(dfArrayFlat_W_Band, 50, 
                              normed=1, facecolor= color,
@@ -553,13 +560,16 @@ for ii, val in enumerate(events.day):
     plt.gca().add_artist(first_legend)
 
     newpars = ax.axvline(x=med_newpars, ymin= 0, ymax = 1, color = 'r', linewidth = 4, 
-               linestyle='dashed',alpha = 0.8, label = 'median Pars (new) = '+ "%5.2f" % med_newpars+' dBZ')
+               linestyle='dashed',alpha = 0.8, label = 'median TMM = '+ "%5.2f" % med_newpars+' dBZ')
+
+    D6pars = ax.axvline(x=med_D6pars, ymin= 0, ymax = 1, color = 'm', linewidth = 4, 
+               linestyle='dashed',alpha = 0.8, label = 'median D6 = '+ "%5.2f" % med_D6pars+' dBZ')
     
     oldpars = ax.axvline(x=med_oldpars, ymin= 0, ymax = 1, color = 'salmon', linewidth = 4, 
-               linestyle='dashed',alpha = 0.8, label = 'median Pars (old) = '+ "%5.2f" % med_oldpars+' dBZ')
+               linestyle='dashed',alpha = 0.8, label = 'median Pars = '+ "%5.2f" % med_oldpars+' dBZ')
 
     Wband = ax.axvline(x=med_WBand, ymin= 0, ymax = 1, color = color, linewidth = 4, 
-               linestyle='dashed',alpha = 0.8, label = 'median Wband = '+ "%5.2f" % med_WBand+' dBZ')
+               linestyle='dashed',alpha = 0.8, label = 'median Mirac = '+ "%5.2f" % med_WBand+' dBZ')
 
     handles = [newpars, oldpars, Wband]
     
@@ -575,7 +585,7 @@ for ii, val in enumerate(events.day):
 
 
     #handles, labels = ax.get_legend_handles_labels()
-    second_legend = plt.legend(handles = [newpars, oldpars, Wband], fontsize=16,loc = 2)
+    second_legend = plt.legend(handles = [newpars,D6pars, oldpars, Wband], fontsize=16,loc = 2)
     ax = plt.gca().add_artist(second_legend)
     #ax.add_artist(second_leged)
 
