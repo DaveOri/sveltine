@@ -49,7 +49,7 @@ for T in temperatures:
                              m=m,
                              axis_ratio=1.0/tmatrix_aux.dsr_thurai_2007(d))
             rain.Kw_sqr = K2
-            rain.or_pdf = orientation.gaussian_pdf(std=20.0)
+            rain.or_pdf = orientation.gaussian_pdf(std=10.0)
             rain.orient = orientation.orient_averaged_adaptive
             rain.set_geometry(tmatrix_aux.geom_vert_back)
             rxs = radar.radar_xsect(rain)
