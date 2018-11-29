@@ -58,9 +58,9 @@ print('\n hail_cosmo5')
 transformPSD(a=0.1366,b=1.0/3.0,nu=1.0,mu=1.0/3.0,xmin=2.6e-9,xmax=5.0e-4)
 getVelocitySize(ag=0.1366,bg=1.0/3.0,av=39.3,bv=1.0/6.0)
 
-print('\n cloud_cosmo5')
-transformPSD(a=1.24e-1,b=1.0/3.0,nu=1.0,mu=1.0,xmin=4.2e-15,xmax=2.6e-10)
-getVelocitySize(ag=1.24e-1,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
+#print('\n cloud_cosmo5')
+#transformPSD(a=1.24e-1,b=1.0/3.0,nu=1.0,mu=1.0,xmin=4.2e-15,xmax=2.6e-10)
+#getVelocitySize(ag=1.24e-1,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
 
 print('\n ice_cosmo5')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-12,xmax=1.0e-5)
@@ -79,12 +79,12 @@ transformPSD(a=0.22,b=1.0/3.31,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
 getVelocitySize(ag=0.22,bg=1.0/3.31,av=41.9,bv=0.26)
 
 print('\n cloud_cosmo')
-transformPSD(a=0.124,b=1.0/3.0,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
+transformPSD(a=0.124,b=1.0/3.0,nu=0.0,mu=1.0/3.0,xmin=4.2e-15,xmax=2.6e-10)
 getVelocitySize(ag=0.124,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
 
 print('\n rain_SBB')
 transformPSD(a=0.124,b=1.0/3.0,nu=0.0,mu=1.0/3.0,xmin=2.6e-10,xmax=3.0e-6)
-getVelocitySize(ag=0.124,bg=1.0/3.0,av=1124.0137,bv=0.2343)
+getVelocitySize(ag=0.124,bg=1.0/3.0,av=114.0137,bv=0.23437)
 
 #rho = lambda D: (6.0*1.588/np.pi)*D**(2.56-3)
 #rho440 = lambda x: 440.0 + 0.0*x
