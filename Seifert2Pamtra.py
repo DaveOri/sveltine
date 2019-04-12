@@ -58,13 +58,13 @@ print('\n hail_cosmo5')
 transformPSD(a=0.1366,b=1.0/3.0,nu=1.0,mu=1.0/3.0,xmin=2.6e-9,xmax=5.0e-4)
 getVelocitySize(ag=0.1366,bg=1.0/3.0,av=39.3,bv=1.0/6.0)
 
-#print('\n cloud_cosmo5')
-#transformPSD(a=1.24e-1,b=1.0/3.0,nu=1.0,mu=1.0,xmin=4.2e-15,xmax=2.6e-10)
-#getVelocitySize(ag=1.24e-1,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
-
 print('\n ice_cosmo5')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-12,xmax=1.0e-5)
 getVelocitySize(ag=0.835,bg=0.39,av=27.7,bv=0.21579)
+
+print('\n cloud_cosmo5')
+transformPSD(a=1.24e-1,b=1.0/3.0,nu=1.0,mu=1.0,xmin=4.2e-15,xmax=2.6e-10)
+getVelocitySize(ag=1.24e-1,bg=1.0/3.0,av=3.75e5,bv=2.0/3.0)
 
 print('\n ice_cosmo5_nonsphere')
 transformPSD(a=0.835,b=0.39,nu=0.0,mu=1.0/3.0,xmin=1.0e-14,xmax=1.0e-5)
@@ -86,6 +86,11 @@ print('\n rain_SBB')
 transformPSD(a=0.124,b=1.0/3.0,nu=0.0,mu=1.0/3.0,xmin=2.6e-10,xmax=3.0e-6)
 getVelocitySize(ag=0.124,bg=1.0/3.0,av=114.0137,bv=0.23437)
 
+print('\n dendrite')
+transformPSD(a=5.17,b=1.0/2.29,nu=0.0,mu=1.0/3.0,xmin=1.0e-13,xmax=1.0e-5)
+getVelocitySize(ag=5.17,bg=1.0/2.29,av=11.0,bv=0.21)
+
+
 #rho = lambda D: (6.0*1.588/np.pi)*D**(2.56-3)
 #rho440 = lambda x: 440.0 + 0.0*x
 #F94 = lambda x: 84.0 + 0.0*x
@@ -104,4 +109,19 @@ getVelocitySize(ag=0.124,bg=1.0/3.0,av=114.0137,bv=0.23437)
 #plt.legend()
 #plt.xlabel('particle size [mm]')
 #plt.ylabel('density [kg/m3]')
+def powLaw(x,a,b):
+  return a*x**b
+size = np.arange(0.0001,0.01,0.0001)
+import matplotlib.pyplot as plt
+plt.figure()
+plt.plot(size,powLaw(size,154.214,0.8606), label='ice_hex')
+plt.plot(size,powLaw(size,30.6063,0.5533), label='ice_cosmo')
+plt.plot(size,powLaw(size,5.51105,0.2500), label='snow_SBB')
+plt.plot(size,powLaw(size,4.992,0.4809), label='dendrite')
+#plt.plot(size,powLaw(size,243388657.6,2.0), label='cloud')
+plt.xlabel('size   [m/s]')
+plt.ylabel('fallspeed    [m/s]')
+plt.grid()
+plt.legend()
+
 

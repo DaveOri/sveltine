@@ -9,8 +9,8 @@ Created on Thu Jan 24 12:01:37 2019
 from scipy.special import gamma
 import numpy as np
 
-N0 = 8.0e6
-q = 1e-7
+N0 = 1.0e9
+q = .5e-4
 ra = 1.0
 rw = 1000.0
 
