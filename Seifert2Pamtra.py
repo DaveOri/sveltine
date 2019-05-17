@@ -109,19 +109,38 @@ getVelocitySize(ag=5.17,bg=1.0/2.29,av=11.0,bv=0.21)
 #plt.legend()
 #plt.xlabel('particle size [mm]')
 #plt.ylabel('density [kg/m3]')
-def powLaw(x,a,b):
-  return a*x**b
-size = np.arange(0.0001,0.01,0.0001)
+
+size = np.arange(0.0001,0.004,0.0001)
 import matplotlib.pyplot as plt
-plt.figure()
-plt.plot(size,powLaw(size,154.214,0.8606), label='ice_hex')
-plt.plot(size,powLaw(size,30.6063,0.5533), label='ice_cosmo')
-plt.plot(size,powLaw(size,5.51105,0.2500), label='snow_SBB')
-plt.plot(size,powLaw(size,4.992,0.4809), label='dendrite')
+plt.figure(figsize=(7,3), dpi=300)
+#plt.figure()
+#plt.plot(size,154.214*np.power(size,0.8606), label='ice_hex')
+plt.plot(1e3*size,30.6063*np.power(size,0.5533), label='ice') #cosmo
+plt.plot(1e3*size,5.51105*np.power(size,0.2500), label='snow') #SBB
+plt.plot(1e3*size,460.67*np.power(size,0.8545), label='graupel')
 #plt.plot(size,powLaw(size,243388657.6,2.0), label='cloud')
-plt.xlabel('size   [m/s]')
+plt.xlabel('size   [mm]')
 plt.ylabel('fallspeed    [m/s]')
 plt.grid()
 plt.legend()
 
+plt.figure()
+plt.semilogy(size,1.5878*np.power(size,2.564), label='ice') # cosmo
+plt.semilogy(size,0.038*np.power(size,2.00), label='snow') #SBB
+plt.semilogy(size,500.86*np.power(size,3.1847), label='graupel')
+#plt.plot(size,powLaw(size,243388657.6,2.0), label='cloud')
+plt.xlabel('size   [m')
+plt.ylabel('mass    [kg]')
+plt.grid()
+plt.legend()
+
+plt.figure()
+plt.loglog(size,1.5878*np.power(size,2.564), label='ice') # cosmo
+plt.loglog(size,0.038*np.power(size,2.00), label='snow') #SBB
+plt.loglog(size,500.86*np.power(size,3.1847), label='graupel')
+#plt.plot(size,powLaw(size,243388657.6,2.0), label='cloud')
+plt.xlabel('size   [m]')
+plt.ylabel('mass    [kg]')
+plt.grid()
+plt.legend()
 
